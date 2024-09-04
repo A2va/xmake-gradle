@@ -1,11 +1,11 @@
 plugins {
     // to publish the plugin at the gradle plugin portal
-    id "com.gradle.plugin-publish" version "0.11.0"
+    id "com.gradle.plugin-publish" version "1.2.1"
     // Apply the java-library plugin to add support for Java Library
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'groovy'
 }
-apply plugin: 'groovy'
 
 group = "org.tboox"
 version = "1.1.6"
@@ -21,31 +21,24 @@ dependencies {
     implementation gradleApi()
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
-    compileOnly "com.android.tools.build:gradle:4.0.0"
+    compileOnly "com.android.tools.build:gradle:8.5.2"
 }
 
 gradlePlugin {
+    website = "https://github.com/xmake-io/xmake-gradle"
+    vcsUrl = "https://github.com/xmake-io/xmake-gradle"
     plugins {
         xmakePlugin {
             id = 'org.tboox.gradle-xmake-plugin'
             implementationClass = 'org.tboox.gradle.XMakePlugin'
+            displayName = "Gradle XMake plugin"
+            description = "A gradle plugin that integrates xmake seamlessly"
+            tags = ["xmake", "c++", "lua"]
         }
     }
 }
 
-pluginBundle {
-    website = 'https://github.com/xmake-io/xmake-gradle'
-    vcsUrl = 'https://github.com/xmake-io/xmake-gradle'
-    description = 'A gradle plugin that integrates xmake seamlessly'
-    tags = ['xmake', 'c++', 'lua']
-
-    plugins {
-        xmakePlugin {
-            // id is captured from java-gradle-plugin configuration
-            displayName = 'Gradle XMake plugin'
-        }
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
-
-sourceCompatibility = "8"
-targetCompatibility = "8"
